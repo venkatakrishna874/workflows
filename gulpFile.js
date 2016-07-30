@@ -36,4 +36,7 @@ gulp.task('compass', function () {
 		.on('error', gutil.log)
 		.pipe(gulp.dest('Builds/Development/CSS'));
 });
+gulp.task('watch', function() {
+	gulp.watch('Compounents/**/*', ['default']);
+})
 gulp.task('default',['coffee','js','compass']);
