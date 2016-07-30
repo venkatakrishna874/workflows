@@ -39,4 +39,4 @@ gulp.task('compass', function () {
 gulp.task('watch', function() {
 	gulp.watch('Compounents/**/*', ['default']);
 })
-gulp.task('default',['coffee','js','compass']);
+gulp.task('default',['coffee','js','compass','watch']);
