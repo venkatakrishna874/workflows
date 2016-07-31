@@ -9,6 +9,7 @@ var gulp = require('gulp'),
 var coffeeSources = ['Compounents/coffee/tagline.coffee'];
 var jsSource = ['Compounents/scripts/*.js'];
 var sassSources = ['Compounents/sass/style.scss'];
+
 gulp.task('log', function () {
 	gutil.log('Welcome gulp');
 });
@@ -22,7 +23,7 @@ gulp.task('coffee', function () {
 });
 gulp.task('js', function () {
 	gulp.src(jsSource)
-		.pipe(concat('scrip.js'))
+		.pipe(concat('script.js'))
 		.pipe(browserify())
 		.pipe(gulp.dest('Builds/Development/JS'))
 	.pipe(connect.reload());
@@ -41,11 +42,23 @@ gulp.task('compass', function () {
 });
 gulp.task('watch', function() {
 	gulp.watch('Compounents/**/*', ['coffee','js','compass']);
+	gulp.watch(htmlSources, ['html']);
+	gulp.watch(jsonSource, ['json']);
 });
 gulp.task('connect', function() {
 	connect.server({
 		root:'Builds/Development',
 		livereload:true
 	});
-})
-gulp.task('default',['coffee','js','compass','connect','watch']);
+});
+var htmlSources = ['Builds/Development/*.html']
+gulp.task('html', function() {
+	gulp.src(htmlSources)
+	.pipe(connect.reload());
+});
+var jsonSource = ['Builds/development/JS/*.json'];
+gulp.task('json', function() {
+	gulp.src(jsonSource)
+	.pipe(connect.reload());
+});
+gulp.task('default',['html','json','coffee','js','compass','connect','watch']);
