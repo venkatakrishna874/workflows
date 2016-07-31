@@ -6,6 +6,7 @@ var gulp = require('gulp'),
 	connect = require('gulp-connect'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
+	minifyHTML = require('gulp-minify-html'),
 	concat = require('gulp-concat');
 
 var coffeeSources,
@@ -74,7 +75,9 @@ gulp.task('connect', function () {
 });
 htmlSources = [outputDir + '*.html']
 gulp.task('html', function () {
-	gulp.src(htmlSources)
+	gulp.src('Builds/Development/*.html')
+	.pipe(gulpif(env === 'production', minifyHTML()))
+	.pipe(gulpif(env === 'production', gulp.dest(outputDir)))
 		.pipe(connect.reload());
 });
 jsonSource = [outputDir + 'JS/*.json'];
